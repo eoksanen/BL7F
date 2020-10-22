@@ -108,6 +108,7 @@ setTimeout(() => {
       url: blog.url,
       likes: blog.likes + 1
     })
+    console.log('RETRUNDS ', rBlog)
     setBlogs(blogs.map(bl => bl.id !== blog.id ? bl : rBlog)) 
 
   }

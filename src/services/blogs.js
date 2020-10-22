@@ -21,10 +21,11 @@ const create = async newObject => {
   return response.data
 }
 
-const update = (id, newObject) => {
-  const request = axios.put(`${ baseUrl }/${id}`, newObject)
+const update = async (id, newObject) => {
+  const request = await axios.put(`${ baseUrl }/${id}`, newObject)
+  console.log('req ',request)
 
-  return request.then(response => response.data)
+  return request.data
 }
 
 const remove = (id) => {
