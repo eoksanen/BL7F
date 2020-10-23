@@ -8,6 +8,9 @@ import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable';
 import PropTypes from 'prop-types'
+import { setNotification } from './reducers/notificationReducer'
+import NotificationR from './components/Notification'
+import { useDispatch, useSelector } from 'react-redux'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -75,9 +78,6 @@ setTimeout(() => {
     try {
       const returnedBlog = await blogService.create(blogObject)
 
-      console.log('SENDED blog: ',blogObject)
-      console.log('Returned BLog: ',returnedBlog)
-
       const response = setBlogs(blogs.concat(returnedBlog))
       messageSetter(`a new blog added by ${user.name} `,'add')
 
@@ -96,7 +96,7 @@ setTimeout(() => {
         messageSetter(`a new blog added by ${user.name} `,'add')
       })*/
   }
-
+  const dispatch = useDispatch()
 
   const handleLikeOf = async (id) => {
 
@@ -108,9 +108,8 @@ setTimeout(() => {
       url: blog.url,
       likes: blog.likes + 1
     })
-    console.log('RETRUNDS ', rBlog)
     setBlogs(blogs.map(bl => bl.id !== blog.id ? bl : rBlog)) 
-
+    dispatch(setNotification(`you voted '${blog.title}'`, 10))
   }
 
   const handleRemoveOf = async (id) => {
@@ -187,6 +186,7 @@ setTimeout(() => {
 
       <h1>Blogs</h1>
       <Notification message={message} />
+      <NotificationR />
 
     {user === null ?
       loginForm() :
@@ -203,14 +203,17 @@ setTimeout(() => {
  
   <br></br>
 {blogs.map(blog => {
-  console.log(blog)
+  //console.log(blog)
   let removeButtonVisibility = null
   if(user && blog.user){  
 
     if( user.userID.localeCompare(blog.user.id) === 0 )     removeButtonVisibility  = true
+    /*
     console.log('userid', user.userID)
     console.log('blog', blog.user.id)
-    console.log('removebutton visibility: ',removeButtonVisibility)}
+  console.log('removebutton visibility: ',removeButtonVisibility)*/
+}
+    
 
   return (
   <Blog key={blog.id} blog={blog} removeButtonVisibility={removeButtonVisibility} handleLike={() => handleLikeOf(blog.id)} handleRemove={() => handleRemoveOf(blog.id)}/>
