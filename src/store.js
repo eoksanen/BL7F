@@ -8,14 +8,14 @@ import notificationReducer from './reducers/notificationReducer'
 //import anecdoteService from './services/anecdotes'
 
 
-
+/*
 const reducer = combineReducers({
   notification: notificationReducer
  
 })
-
+*/
 const store = createStore(
-  reducer,
+  notificationReducer,
   composeWithDevTools(applyMiddleware(thunk))
 )
 

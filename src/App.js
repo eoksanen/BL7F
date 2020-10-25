@@ -186,7 +186,7 @@ setTimeout(() => {
 
       <h1>Blogs</h1>
       <Notification message={message} />
-      <NotificationR />
+      <NotificationR  />
 
     {user === null ?
       loginForm() :

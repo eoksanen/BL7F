@@ -5,7 +5,7 @@ const notificationReducer = (state = ['', ''], action) => {
         return action.notification
       case 'CLEAR_NOTIFICATION':
           console.log('CLEAR_NOTIFICATION')
-          return ['',null]
+          return ['','']
       default:
         return state
     }
@@ -14,6 +14,7 @@ const notificationReducer = (state = ['', ''], action) => {
   let timeID
   
   export const setNotification = (notification, delay) => {
+
   
     function delayFunction(res) {
   
@@ -30,7 +31,7 @@ const notificationReducer = (state = ['', ''], action) => {
           type: 'SET_NOTIFICATION',
           notification,
         })
-        console.log('NOT ',notification)
+        console.log('NOTification ',notification)
         await new Promise(res => delayFunction(res));
         console.log('Waited ',delay * 1000 + ' second')
         dispatch({
