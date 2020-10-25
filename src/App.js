@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 import { setNotification } from './reducers/notificationReducer'
 import NotificationR from './components/Notification'
 import { useDispatch, useSelector } from 'react-redux'
-
+import { initializeBlogs } from './reducers/blogReducer'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('') 
@@ -20,12 +20,19 @@ const App = () => {
   const [message, setMessage] = useState('')
   const [loginVisible, setLoginVisible] = useState(false)
 
-
+/*
   useEffect(() => { 
     blogService.getAll().then(blogs =>
       setBlogs( blogs.sort( (a,b)=> b.likes - a.likes ))
     )  
   }, [])
+  */
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(initializeBlogs()
+      ())   
+    },[dispatch])
 
   useEffect(() => {
   const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -78,7 +85,7 @@ setTimeout(() => {
     try {
       const returnedBlog = await blogService.create(blogObject)
 
-      const response = setBlogs(blogs.concat(returnedBlog))
+      setBlogs(blogs.concat(returnedBlog))
       messageSetter(`a new blog added by ${user.name} `,'add')
 
       window.localStorage.setItem(
@@ -96,7 +103,7 @@ setTimeout(() => {
         messageSetter(`a new blog added by ${user.name} `,'add')
       })*/
   }
-  const dispatch = useDispatch()
+
 
   const handleLikeOf = async (id) => {
 

@@ -1,6 +1,11 @@
 import React, {useState} from 'react'
+import { useDispatch } from 'react-redux'
+
+
 
 const BlogForm = ({ createBlog }) => {
+
+  const dispatch = useDispatch()
 
   const [newTitle, setTitle] = useState('') 
   const [newAuthor, setAuthor] = useState('') 
@@ -19,7 +24,7 @@ const BlogForm = ({ createBlog }) => {
       url: newUrl
       }
 
-      createBlog(newBlog)
+      dispatch(createBlog(newBlog))
       
       setTitle('')
       setAuthor('')
@@ -28,7 +33,6 @@ const BlogForm = ({ createBlog }) => {
       
     } 
   
-
    
     return (
       <div>

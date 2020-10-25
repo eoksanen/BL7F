@@ -4,29 +4,21 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 
 import notificationReducer from './reducers/notificationReducer'
+import blogReducer from './reducers/blogReducer'
 
-//import anecdoteService from './services/anecdotes'
 
 
-/*
 const reducer = combineReducers({
+  blogs: blogReducer,
   notification: notificationReducer
+
  
 })
-*/
+
 const store = createStore(
-  notificationReducer,
+  reducer,
   composeWithDevTools(applyMiddleware(thunk))
 )
-
-/*
-anecdoteService.getAll().then(anecdotes =>
-   {
-    console.log('BACK',anecdotes)
-    store.dispatch(initializeAnecdotes(anecdotes))
-  }
-)
-*/
 
 
 export default store
