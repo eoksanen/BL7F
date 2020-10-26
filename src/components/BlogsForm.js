@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
+import { setNotification } from './reducers/notificationReducer'
 
 
 const NewBlog = () => {
@@ -14,7 +15,7 @@ const NewBlog = () => {
   
     //props.createBlog(content)
     dispatch(createBlog(content))
-    //dispatch(NotificationChange(['notificationShow','New blog created with following content: ' + content]))
+    dispatch(setNotification(`New blog created with following content: ${content}`, 5))
 
   } 
 

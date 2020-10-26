@@ -11,9 +11,9 @@ import PropTypes from 'prop-types'
 import { setNotification } from './reducers/notificationReducer'
 import NotificationR from './components/Notification'
 import { useDispatch, useSelector } from 'react-redux'
-import { initializeBlogs } from './reducers/blogReducer'
+import { initializeBlogs, removeBlog, voteBlog } from './reducers/blogReducer'
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+  //const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
@@ -29,10 +29,13 @@ const App = () => {
   */
 
   const dispatch = useDispatch()
+  
   useEffect(() => {
-    dispatch(initializeBlogs()
-      ())   
-    },[dispatch])
+    blogService
+      .getAll().then(blgs => dispatch(initializeBlogs(blgs)))   
+    },[])
+
+    const blogs = useSelector(state => state.blogs)
 
   useEffect(() => {
   const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -79,7 +82,7 @@ setTimeout(() => {
       'error')
     }
   }
-
+/*
   const addBlog = async (blogObject) => {
 
     try {
@@ -102,12 +105,15 @@ setTimeout(() => {
         setBlogs(blogs.concat(returnedBlog))
         messageSetter(`a new blog added by ${user.name} `,'add')
       })*/
-  }
-
+ // }
 
   const handleLikeOf = async (id) => {
 
     const blog = blogs.find(b => b.id === id)
+
+    dispatch(voteBlog(blog))
+
+    /*
 
     let rBlog = await  blogService.update(blog.id,{
       title: blog.title,
@@ -115,14 +121,21 @@ setTimeout(() => {
       url: blog.url,
       likes: blog.likes + 1
     })
-    setBlogs(blogs.map(bl => bl.id !== blog.id ? bl : rBlog)) 
-    dispatch(setNotification(`you voted '${blog.title}'`, 10))
+    */
+    //setBlogs(blogs.map(bl => bl.id !== blog.id ? bl : rBlog)) 
+    dispatch(setNotification(`you voted ${blog.title}`, 6))
   }
 
-  const handleRemoveOf = async (id) => {
+  const handleRemoveOf = async (blog) => {
 
-      blogService.remove(id)
-      setBlogs(blogs.filter(n => n.id !== id))      
+
+    const removedTittle = blog.title
+
+    dispatch(removeBlog(blog.id))
+    dispatch(setNotification(`you removed ${removedTittle} blog `, 7))
+
+     // blogService.remove(id)
+    //  setBlogs(blogs.filter(n => n.id !== id))      
   }
   
 
@@ -176,7 +189,7 @@ setTimeout(() => {
     }
     const blogForm = () => (
     <Togglable buttonLabel='add a new blog'>
-    <BlogForm createBlog={addBlog} />
+    <BlogForm  />
 </Togglable>
 
     )
@@ -223,7 +236,7 @@ setTimeout(() => {
     
 
   return (
-  <Blog key={blog.id} blog={blog} removeButtonVisibility={removeButtonVisibility} handleLike={() => handleLikeOf(blog.id)} handleRemove={() => handleRemoveOf(blog.id)}/>
+  <Blog key={blog.id} blog={blog} removeButtonVisibility={removeButtonVisibility} handleLike={() => handleLikeOf(blog.id)} handleRemove={() => handleRemoveOf(blog)}/>
 )})}
 </div>
   )

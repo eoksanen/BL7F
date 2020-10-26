@@ -27,6 +27,14 @@ const update = async (id, newObject) => {
   return request.data
 }
 
+const vote = async (blog) => {
+  const url = `${ baseUrl }/${blog.id}`
+  const changedBlog = { ...blog, likes: blog.likes + 1 }
+  const response = await axios.put(url, changedBlog)
+  return response.data
+}
+
+
 const remove = (id) => {
 
   const config = {
@@ -36,4 +44,4 @@ const remove = (id) => {
   const request = axios.delete(`${ baseUrl }/${id}`, config)
   return request.then(response => response.data)
 }
-export default { getAll, create, update, setToken, remove }
+export default { getAll, create, update, setToken, remove, vote }

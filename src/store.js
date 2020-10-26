@@ -9,9 +9,8 @@ import blogReducer from './reducers/blogReducer'
 
 
 const reducer = combineReducers({
-  blogs: blogReducer,
-  notification: notificationReducer
-
+  notification: notificationReducer,
+  blogs: blogReducer
  
 })
 

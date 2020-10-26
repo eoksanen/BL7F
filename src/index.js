@@ -5,7 +5,6 @@ import { createStore } from 'redux'
 import './index.css';
 import App from './App'
 import { Provider } from 'react-redux'
-import notificationReducer from './reducers/notificationReducer'
 
 
 //const store = createStore(notificationReducer)

@@ -1,6 +1,6 @@
 import blogService from '../services/blogs'
 
-
+/*
 const getId = () => (100000 * Math.random()).toFixed(0)
 
 const asObject = (blog) => {
@@ -10,13 +10,17 @@ const asObject = (blog) => {
     votes: 0
   }
 }
-
+*/
 const reducer = (state = [], action) => {
 
 
   switch(action.type){
     case 'ADDNEW': 
       return [...state, action.data]
+    case 'REMOVE_BLOG':
+      const idr = action.data
+      console.log('removed item id ', idr)
+      return [...state.filter(blog => blog.id !== action.data)]
     case 'INIT_BLOGS':
       return action.data
     case 'VOTE':
@@ -25,12 +29,12 @@ const reducer = (state = [], action) => {
       const blogToVote = state.find(n => n.id === id)
       const changedBlog = { 
         ...blogToVote, 
-        votes: blogToVote.votes + 1
+        likes: blogToVote.likes + 1
       } 
         return state.map(blog =>
           blog.id !== id ? blog : changedBlog
         )
-
+        
     default:
     return state
   }
@@ -57,7 +61,17 @@ export const createBlog = (newBlogObject) => {
   }
 }
 
-export const initializeBlogs = (blogs) => {
+export const removeBlog = (id) => {
+  return async dispatch => {
+    const req = await blogService.remove(id)
+    dispatch({
+      type: 'REMOVE_BLOG',
+      data: id
+    })
+  }
+}
+
+export const initializeBlogs = () => {
   return async dispatch => {
     const blogs = await blogService.getAll()
     dispatch({
