@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import './App.css';
 import Blog from './components/Blog'
+import Users from './components/Users'
+import User from './components/User'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import userService from './services/users'
 import ShowName from './components/ShowName'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
@@ -12,7 +15,20 @@ import { setNotification } from './reducers/notificationReducer'
 import NotificationR from './components/Notification'
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs, removeBlog, voteBlog } from './reducers/blogReducer'
+import { initializeUsers } from './reducers/userReducer'
 import { login, logout, setUser } from './reducers/loginReducer'
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useParams,
+  useRouteMatch,
+  useHistory,
+} from "react-router-dom"
+
 const App = () => {
   //const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('') 
@@ -34,18 +50,20 @@ const App = () => {
   useEffect(() => {
     blogService
       .getAll().then(blgs => dispatch(initializeBlogs(blgs)))   
+    userService
+      .getAll().then(usrs => dispatch(initializeUsers(usrs)))  
     },[])
 
     const blogs = useSelector(state => state.blogs)
-    let user = useSelector(state => state.login)
+    let loggedUser = useSelector(state => state.login)
 
   useEffect(() => {
   const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
 
   if (loggedUserJSON) {
-    user = JSON.parse(loggedUserJSON)
-    dispatch(setUser(user))
-    blogService.setToken(user.token)
+    loggedUser = JSON.parse(loggedUserJSON)
+    dispatch(setUser(loggedUser))
+    blogService.setToken(loggedUser.token)
 
   }
 }, [])
@@ -187,9 +205,13 @@ setTimeout(() => {
 
  
 
- if(user){   
-  if(user.name === undefined){user.name = "su"}
+ if(loggedUser){   
+  if(loggedUser.name === undefined){loggedUser.name = "su"}
  }
+
+ const padding = {
+  padding: 5
+}
 
   return (
 
@@ -199,25 +221,39 @@ setTimeout(() => {
       <Notification message={message} />
       <NotificationR  />
 
-    {user === null ?
+    {loggedUser === null ?
       loginForm() :
       <div>
-        <p>{user.name} logged in</p>
+        <p>{loggedUser.name} logged in</p>
         <button onClick = {() => { 
       dispatch(logout())
       }}>Log Out</button>
         {blogForm()}
       </div>
     }
+
+<div>
+      <Link style={padding} to="/">Home</Link>
+      <Link style={padding} to="/blogs">blogs</Link> 
+      <Link style={padding} to="/users">users</Link>
+      <Link style={padding} to="/about">about</Link>
+    </div>
+    
+    <Switch>
+
+          <Route path="/users">
+            <Users />
+          </Route>
+      </Switch>
   
  
   <br></br>
 {blogs.map(blog => {
   //console.log(blog)
   let removeButtonVisibility = null
-  if(user && blog.user){  
+  if(loggedUser && blog.user){  
 
-    if( user.userID.localeCompare(blog.user.id) === 0 )     removeButtonVisibility  = true
+    if( loggedUser.userID.localeCompare(blog.user.id) === 0 )     removeButtonVisibility  = true
     /*
     console.log('userid', user.userID)
     console.log('blog', blog.user.id)
@@ -228,6 +264,7 @@ setTimeout(() => {
   return (
   <Blog key={blog.id} blog={blog} removeButtonVisibility={removeButtonVisibility} handleLike={() => handleLikeOf(blog.id)} handleRemove={() => handleRemoveOf(blog)}/>
 )})}
+<Users />
 </div>
   )
 }

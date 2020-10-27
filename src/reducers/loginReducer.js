@@ -47,7 +47,6 @@ const reducer = (state = null, action) => {
 
     export const logout = () => {
         return async dispatch => {
-          console.log('LOGOUT')
           window.localStorage.removeItem('loggedBlogappUser')
 
               dispatch({
