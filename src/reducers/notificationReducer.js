@@ -5,7 +5,7 @@ const notificationReducer = (state = ['', ''], action) => {
         return action.notification
       case 'CLEAR_NOTIFICATION':
           console.log('CLEAR_NOTIFICATION')
-          return ['','']
+          return ['', '']
       default:
         return state
     }

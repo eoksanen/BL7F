@@ -12,11 +12,12 @@ import { setNotification } from './reducers/notificationReducer'
 import NotificationR from './components/Notification'
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs, removeBlog, voteBlog } from './reducers/blogReducer'
+import { login, logout, setUser } from './reducers/loginReducer'
 const App = () => {
   //const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
-  const [user, setUser] = useState(null)
+ // const [user, setUser] = useState(null)
   const [message, setMessage] = useState('')
   const [loginVisible, setLoginVisible] = useState(false)
 
@@ -36,13 +37,16 @@ const App = () => {
     },[])
 
     const blogs = useSelector(state => state.blogs)
+    let user = useSelector(state => state.login)
 
   useEffect(() => {
   const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
+
   if (loggedUserJSON) {
-    const user = JSON.parse(loggedUserJSON)
-    setUser(user)
+    user = JSON.parse(loggedUserJSON)
+    dispatch(setUser(user))
     blogService.setToken(user.token)
+
   }
 }, [])
 
@@ -61,26 +65,13 @@ setTimeout(() => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    try {
-      const user = await loginService.login({
-        username, password,
-      })
 
-      window.localStorage.setItem(
-        'loggedBlogappUser', JSON.stringify(user)
-      )
-      blogService.setToken(user.token)
-      setUser(user)
-      setUsername('')
-      setPassword('')
-      
-      messageSetter(`welcome ${user.name}`,
-      'add')
+      dispatch(login(username, password))
+      setNotification('welcome ',5)
 
-    } catch (exception) {
-      messageSetter('wrong credentials',
-      'error')
-    }
+            
+    
+    setNotification('welcome ',5)
   }
 /*
   const addBlog = async (blogObject) => {
@@ -213,8 +204,7 @@ setTimeout(() => {
       <div>
         <p>{user.name} logged in</p>
         <button onClick = {() => { 
-      window.localStorage.removeItem('loggedBlogappUser')
-      setUser(null)
+      dispatch(logout())
       }}>Log Out</button>
         {blogForm()}
       </div>

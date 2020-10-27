@@ -20,7 +20,7 @@ const reducer = (state = [], action) => {
     case 'REMOVE_BLOG':
       const idr = action.data
       console.log('removed item id ', idr)
-      return [...state.filter(blog => blog.id !== action.data)]
+      return [...state.filter(blog => blog.id !== idr)]
     case 'INIT_BLOGS':
       return action.data
     case 'VOTE':
