@@ -239,8 +239,11 @@ setTimeout(() => {
       <Link style={padding} to="/about">about</Link>
     </div>
     
+ 
     <Switch>
-
+        <Route path="/users/:id">
+            <User />
+          </Route>
           <Route path="/users">
             <Users />
           </Route>
@@ -264,7 +267,7 @@ setTimeout(() => {
   return (
   <Blog key={blog.id} blog={blog} removeButtonVisibility={removeButtonVisibility} handleLike={() => handleLikeOf(blog.id)} handleRemove={() => handleRemoveOf(blog)}/>
 )})}
-<Users />
+
 </div>
   )
 }
