@@ -1,32 +1,68 @@
-import React, {useState} from 'react'
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import {voteBlog, removeBlog} from '../reducers/blogReducer'
+import { setNotification } from '../reducers/notificationReducer'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    Redirect,
+    useParams,
+    useRouteMatch,
+    useHistory,
+  } from "react-router-dom"
 
-const Blog = ({ blog, removeButtonVisibility, handleLike, handleRemove }) => {
-  const [visible, setVisible] = useState(false)
+const Blog = ({ showRemoveButton }) => {
 
-  const showWhenVisible = { display: visible ? '' : 'none' }
-  const showRemoveButton = { display: removeButtonVisibility ? '' : 'none' }
+  const handleRemoveOf = async (blog) => {
 
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
+
+    const removedTittle = blog.title
+
+    dispatch(removeBlog(blog.id))
+    dispatch(setNotification(`you removed ${removedTittle} blog `, 7))
+
+     // blogService.remove(id)
+    //  setBlogs(blogs.filter(n => n.id !== id))      
   }
+
+
+  const blogs = useSelector(state => state.blogs)
+  const dispatch = useDispatch()
+
+  console.log('blogs ', blogs)
+
+
+  const match = useRouteMatch('/blogs/:id')
+  console.log('match ', match)
+  const blog = match 
+  ? blogs.find(blog => blog.id === match.params.id)
+  : null
+
+  if (!blog) {
+      return null
+    }
+
+
+  console.log('finded blog ', blog)
+
+
+  if (blog) {
+          console.log(blog.title)
+    }
+
+
+
+
   return (
-  <div style={blogStyle} className='blog'>
-    {blog.title} {blog.author} <button onClick = {() => visible ? setVisible(false) : setVisible(true)}>
-  {visible ? "hide" : "view" }
-    </button>
-
-      <div style={showWhenVisible} className='moreInfo'> 
-      URL: {blog.url}
-      <br></br>
-      LIKES: {blog.likes} <button onClick={handleLike}
-        >Like</button>
-      <button style = {showRemoveButton} onClick={handleRemove}>REmove</button>
-      </div>
-
+  <div className='blog'>
+    <h1> {blog.title}</h1>
+    <a href = {blog.url}>{blog.url}</a>
+    <div>{blog.likes}</div>  
+    <div>likes <button onClick={ () => dispatch(voteBlog(blog))}>Like</button></div>
+    <div>adden by {blog.author} </div>
+    <div><button style = {showRemoveButton} onClick={() => handleRemoveOf(blog)}>REmove</button></div>
   </div>
   )
 }
