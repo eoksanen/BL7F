@@ -62,6 +62,15 @@ const Blog = ({ showRemoveButton }) => {
     <div>{blog.likes}</div>  
     <div>likes <button onClick={ () => dispatch(voteBlog(blog))}>Like</button></div>
     <div>adden by {blog.author} </div>
+    <br></br>
+    <div>
+    <h3>comments</h3>        
+            <ul> 
+                {blog.comments.map(cm => (
+                <li key = {cm.id}>{cm.comment}</li> 
+                ))}
+            </ul>
+        </div>
     <div><button style = {showRemoveButton} onClick={() => handleRemoveOf(blog)}>REmove</button></div>
   </div>
   )
