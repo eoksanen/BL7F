@@ -2,6 +2,8 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {voteBlog, removeBlog} from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
+import CommentForm from './CommentForm'
+import Togglable from './Togglable';
 import {
     BrowserRouter as Router,
     Switch,
@@ -26,6 +28,14 @@ const Blog = ({ showRemoveButton }) => {
      // blogService.remove(id)
     //  setBlogs(blogs.filter(n => n.id !== id))      
   }
+
+
+  
+  const ToggleCommentForm = () => (
+    <Togglable buttonLabel='add a new comment'>
+    <CommentForm blogId = {blog.id} />
+</Togglable>
+    )
 
 
   const blogs = useSelector(state => state.blogs)
@@ -53,8 +63,6 @@ const Blog = ({ showRemoveButton }) => {
     }
 
 
-
-
   return (
   <div className='blog'>
     <h1> {blog.title}</h1>
@@ -71,7 +79,10 @@ const Blog = ({ showRemoveButton }) => {
                 ))}
             </ul>
         </div>
+        <div><ToggleCommentForm /></div>
     <div><button style = {showRemoveButton} onClick={() => handleRemoveOf(blog)}>REmove</button></div>
+
+    
   </div>
   )
 }

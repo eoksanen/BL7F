@@ -12,6 +12,15 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
+const createComment = async (newCommentObject) => {
+  console.log('newObject ', newCommentObject)
+
+  const url = `${baseUrl}/${newCommentObject.blog_id}/comments`
+  console.log('URL ', url)
+  const response = await axios.post(url, newCommentObject)
+  return response.data
+}
+
 const create = async newObject => {
   const config = {
     headers: { Authorization: token },
@@ -20,8 +29,8 @@ const create = async newObject => {
   return response.data
 }
 
-const update = async (id, newObject) => {
-  const request = await axios.put(`${ baseUrl }/${id}`, newObject)
+const update = async (id, updateObject) => {
+  const request = await axios.put(`${ baseUrl }/${id}`, updateObject)
 
   return request.data
 }
@@ -43,4 +52,4 @@ const remove = (id) => {
   const request = axios.delete(`${ baseUrl }/${id}`, config)
   return request.then(response => response.data)
 }
-export default { getAll, create, update, setToken, remove, vote }
+export default { getAll, create, update, setToken, remove, vote, createComment }

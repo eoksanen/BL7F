@@ -15,6 +15,14 @@ const reducer = (state = [], action) => {
 
 
   switch(action.type){
+    case 'ADD_COMMENT':
+      const newComment = action.data
+      console.log('COMNE ',newComment)
+      const blogToComment = state.find(b => b.id === newComment.blog)
+      const commentedBlog = {...blogToComment, comments: blogToComment.comments.concat(newComment)}
+      return state.map(blog =>
+        blog.id !== newComment.blog ? blog : commentedBlog
+      )
     case 'ADDNEW': 
       return [...state, action.data]
     case 'REMOVE_BLOG':
@@ -47,6 +55,18 @@ export const voteBlog = (blog) => {
     dispatch({
     type: 'VOTE',
     data: votedBlog,
+  })
+  }
+}
+
+export const addComment = (commentObject) => {
+  return async dispatch => {
+    
+
+    const newComment = await blogService.createComment(commentObject)
+    dispatch({
+    type: 'ADD_COMMENT',
+    data: newComment,
   })
   }
 }

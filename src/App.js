@@ -143,7 +143,6 @@ setTimeout(() => {
     <Togglable buttonLabel='add a new blog'>
     <BlogForm  />
 </Togglable>
-
     )
 
  
@@ -181,9 +180,6 @@ setTimeout(() => {
         <div>
       
       
-     
-
-      
     </div>
 
       <h1>Blogs</h1>
@@ -196,10 +192,7 @@ setTimeout(() => {
        
         {blogForm()}
       </div>
-    
-
-
-    
+     
  
     <Switch>
     <Route path="/blogs/:id">
