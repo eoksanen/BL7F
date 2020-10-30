@@ -65,3 +65,76 @@ h2 {
 .notificationHide {
   visibility: hidden
 }
+h1 {
+  color:  rgb(63, 136, 120);;
+  background: rgb(255, 228, 209);
+  font-size: 40px;
+  border-style: solid;
+  border-radius: 40px;
+  text-indent: 100px;
+  width: 310px;
+  margin: 20px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+#nameofblog {
+  font-size: 20px;
+  text-indent: 75px;
+}
+  button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 30px;
+  
+}
+.buttonMenuBar
+{
+  font-size: 15px;
+  padding: 9px 15px;
+}
+#login-front-button{
+  font-size: 20px;
+  padding: 15px 32px;
+}
+.blogList {
+    font-size: 12px;
+    padding: 8px 12px;
+
+}
+
+ul {
+  background: #3399ff;
+  padding: 20px;
+  width: 400px;
+}
+
+ul li {
+  background: #cce5ff;
+  margin: 5px;
+}
+
+a:link, a:visited, a:hover, a:active {
+  background-color: green;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  }
+  .blog {
+    color: green;
+    background: rgb(168, 202, 167);
+    font-size: 30px;
+    border-style: solid;
+    border-radius: 7px;
+    padding: 5px;
+    margin-bottom: 10px;
+  }

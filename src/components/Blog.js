@@ -68,7 +68,7 @@ const Blog = ({ showRemoveButton }) => {
     <h1 id="nameofblog" > {blog.title}</h1>
     <a href = {blog.url}>{blog.url}</a>
     <div>{blog.likes}</div>  
-    <div>likes <button onClick={ () => dispatch(voteBlog(blog))}>Like</button></div>
+    <div>likes <button className="blogList" onClick={ () => dispatch(voteBlog(blog))}>Like</button></div>
     <div>adden by {blog.author} </div>
     <br></br>
     <div>

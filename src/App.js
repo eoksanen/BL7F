@@ -121,7 +121,7 @@ setTimeout(() => {
         <div style={hideWhenVisible}>
         <h2>Log in to application</h2>
         <Notification message={message} />
-          <button className="button" onClick={() => setLoginVisible(true)}>log in</button>
+          <button className="buttonMenuBar" id="login-front-button" onClick={() => setLoginVisible(true)}>log in</button>
         </div>
         <div style={showWhenVisible}>
         <LoginForm    
@@ -131,7 +131,7 @@ setTimeout(() => {
           handleUsernameChange = {({ target }) => setUsername(target.value)} 
           handlePasswordChange = {({ target }) => setPassword(target.value)}
         />
-        <button onClick={() => setLoginVisible(false)}>cancel</button>
+        <button className="buttonMenuBar" onClick={() => setLoginVisible(false)}>cancel</button>
         </div>
 
 

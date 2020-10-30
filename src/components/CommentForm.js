@@ -43,7 +43,7 @@ const CommentForm = ({blogId}) => {
           </div>
           <div>
             </div>
-          <button type="submit">add</button>
+          <button className="blogList" type="submit">add</button>
         </form>
       </div>
     )
