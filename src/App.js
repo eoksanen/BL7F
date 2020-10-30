@@ -121,7 +121,7 @@ setTimeout(() => {
         <div style={hideWhenVisible}>
         <h2>Log in to application</h2>
         <Notification message={message} />
-          <button onClick={() => setLoginVisible(true)}>log in</button>
+          <button className="button" onClick={() => setLoginVisible(true)}>log in</button>
         </div>
         <div style={showWhenVisible}>
         <LoginForm    
@@ -169,9 +169,10 @@ setTimeout(() => {
               loginForm() :  <p style={padding}>{loggedUser.name} logged in</p>}
             </td>
             <td> 
+            {loggedUser === null ? null :
               <button onClick = {() => { 
                 dispatch(logout())
-                }}>Log Out</button>
+                }}>Log Out</button>}
             </td>
           </tr>
         </tbody>
