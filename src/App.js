@@ -14,6 +14,7 @@ import Togglable from './components/Togglable';
 import PropTypes from 'prop-types'
 import { setNotification } from './reducers/notificationReducer'
 import NotificationR from './components/Notification'
+import Notification from './components/loginNotification'
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs, removeBlog, voteBlog } from './reducers/blogReducer'
 import { initializeUsers } from './reducers/userReducer'
@@ -29,6 +30,9 @@ import {
   useRouteMatch,
   useHistory,
 } from "react-router-dom"
+
+import { Container, Button, AppBar, Toolbar, IconButton } from '@material-ui/core'
+import  Alert  from '@material-ui/lab/Alert'
 
 const App = () => {
   //const [blogs, setBlogs] = useState([])
@@ -87,27 +91,9 @@ setTimeout(() => {
     event.preventDefault()
 
       dispatch(login(username, password))
-      setNotification('welcome ',5)
-
-            
-    
-    setNotification('welcome ',5)
+      setMessage(`Welcome ${username} `)
+     // dispatch(setNotification('welcome ',5))
   }
-
-
-  const Notification = ({message}) => {
-    if (message === null) {
-      return null
-    }
-  else{
-    return (
-    
-      <div className={message[1]}>
-        {message[0]}
-      </div>
-    )
-  }
-}
 
   const loginForm = () => {
 
@@ -116,22 +102,30 @@ setTimeout(() => {
     const showWhenVisible = { display: loginVisible ? '' : 'none' }
 
     return (
-
       <div>
+
         <div style={hideWhenVisible}>
+        <table className='menu'>
+        <tbody>
+          <tr>
+            <td>
         <h2>Log in to application</h2>
         <Notification message={message} />
-          <button className="button" onClick={() => setLoginVisible(true)}>log in</button>
+        </td>
+        <td>
+        <Button variant="contained" color="primary" onClick={() => setLoginVisible(true)}>log in</Button>
+          </td>
+          </tr>
+          </tbody>
+          </table>
         </div>
         <div style={showWhenVisible}>
         <LoginForm    
           handleSubmit ={handleLogin} 
-          username = {username} 
-          password = {password}
           handleUsernameChange = {({ target }) => setUsername(target.value)} 
           handlePasswordChange = {({ target }) => setPassword(target.value)}
         />
-        <button onClick={() => setLoginVisible(false)}>cancel</button>
+        <Button variant="contained" color="primary" onClick={() => setLoginVisible(false)}>cancel</Button>
         </div>
 
 
@@ -154,25 +148,31 @@ setTimeout(() => {
  const padding = {
   padding: 5
 }
-
   return (
-
+<Container>
+<div>
+  {(message &&
+    <Alert  onClose={() => {setMessage('')}} severity="success">
+      {message}
+    </Alert>
+  )}
+</div>
     <div>
       <table className='menu'>
         <tbody>
           <tr>
             <td><Link style={padding} to="/">Home</Link></td>
-            <td><Link style={padding} to="/blogs">blogs</Link> </td>
-            <td> <Link style={padding} to="/users">users</Link></td>
+            <td><Link style={padding} to="/blogs">blogs</Link></td>
+            <td><Link style={padding} to="/users">users</Link></td>
             <td>      
               {loggedUser === null ?
               loginForm() :  <p style={padding}>{loggedUser.name} logged in</p>}
             </td>
             <td> 
             {loggedUser === null ? null :
-              <button onClick = {() => { 
+              <Button variant="contained" color="primary" onClick = {() => { 
                 dispatch(logout())
-                }}>Log Out</button>}
+                }}>Log Out</Button>}
             </td>
           </tr>
         </tbody>
@@ -184,7 +184,6 @@ setTimeout(() => {
     </div>
 
       <h1>Blogs</h1>
-      <Notification message={message} />
       <NotificationR  />
 
 
@@ -214,6 +213,7 @@ setTimeout(() => {
   <br></br>
 
 </div>
+</Container>
   )
 }
 

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import reducer from '../reducers/blogReducer'
 import { createBlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
+import Button from '@material-ui/core/Button'
 
 
 
@@ -73,7 +74,7 @@ const BlogForm = () => {
                 onChange={(event) => setUrl(event.target.value)}
             />
             </div>
-          <button type="submit">save</button>
+            <Button variant="contained" color="primary"  type="submit">save</Button>
         </form>
       </div>
     )

@@ -11,6 +11,15 @@ import {
     useHistory,
   } from "react-router-dom"
 
+  import {
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableRow,
+    Paper,
+  } from '@material-ui/core'
+
 
 
 const User = () => {
@@ -48,12 +57,27 @@ const User = () => {
             <h1>{user.name}</h1>
 
                 <h3>added blogs</h3>
-            
-                    <ul> 
-                        {user.blogs.map(bl => (
-                        <li key = {bl.id}>{bl.title}</li> 
-                        ))}
-                    </ul>
+
+                    <TableContainer component={Paper}>
+                        <Table>
+                        <TableBody>            
+                            {user.blogs.map(bl => (
+                            <TableRow key={bl.id}>
+                                <TableCell>
+                                <Link to={`/blogs/${bl.id}`}> {bl.title}</Link>
+                                </TableCell>
+                                <TableCell>
+                                {`${bl.likes} likes`}
+                                </TableCell>
+                                <TableCell>
+                                {bl.url}
+                                </TableCell>
+                            </TableRow>
+                            ))}
+                    </TableBody>
+                    </Table>
+                    </TableContainer>
+
         </div>
     
     )

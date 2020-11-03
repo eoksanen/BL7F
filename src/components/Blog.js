@@ -14,6 +14,16 @@ import {
     useRouteMatch,
     useHistory,
   } from "react-router-dom"
+  import Button from '@material-ui/core/Button'
+
+  import {
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableRow,
+    Paper,
+  } from '@material-ui/core'
 
 const Blog = ({ showRemoveButton }) => {
 
@@ -68,19 +78,32 @@ const Blog = ({ showRemoveButton }) => {
     <h1 id="nameofblog" > {blog.title}</h1>
     <a href = {blog.url}>{blog.url}</a>
     <div>{blog.likes}</div>  
-    <div>likes <button onClick={ () => dispatch(voteBlog(blog))}>Like</button></div>
+    <div>likes <Button color="primary" onClick={ () => dispatch(voteBlog(blog))}>Like</Button></div>
     <div>adden by {blog.author} </div>
     <br></br>
     <div>
-    <h3>comments</h3>        
-            <ul> 
-                {blog.comments.map(cm => (
-                <li key = {cm.id}>{cm.comment}</li> 
-                ))}
-            </ul>
+    <h3>comments</h3>  
+
+    
+            <TableContainer component={Paper}>
+              <Table>
+                <TableBody>            
+                  {blog.comments.map(cm => (
+                    <TableRow key={cm.id}>
+                      <TableCell>
+                        {cm.comment}
+                      </TableCell>
+                      <TableCell>
+                        remove
+                      </TableCell>
+                    </TableRow>
+                  ))}
+          </TableBody>
+          </Table>
+          </TableContainer>      
         </div>
         <div><ToggleCommentForm /></div>
-    <div><button style = {showRemoveButton} onClick={() => handleRemoveOf(blog)}>REmove</button></div>
+    <div><Button style = {showRemoveButton} onClick={() => handleRemoveOf(blog)}>Remove</Button></div>
 
     
   </div>

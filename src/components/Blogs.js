@@ -1,6 +1,14 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+} from '@material-ui/core'
 
 
 
@@ -21,16 +29,25 @@ const Blogs = () => {
 
     return (
 
-        <div>            
-            {blogs.map(blog => {
-
-  return (
-
-    <div key={blog.id} style={blogStyle} className='blog'>
-   <Link to={`/blogs/${blog.id}`}> {blog.title}</Link>
-  </div>
-    
-     )})}
-          </div>  )
+      <TableContainer component={Paper}>
+        <Table>
+          <TableBody>            
+            {blogs.map(blog => (
+              <TableRow key={blog.id}>
+                <TableCell>
+                <Link to={`/blogs/${blog.id}`}> {blog.title}</Link>
+                </TableCell>
+                <TableCell>
+                  {`${blog.likes} likes`}
+                </TableCell>
+                <TableCell>
+                  {blog.url}
+                </TableCell>
+              </TableRow>
+            ))}
+     </TableBody>
+     </Table>
+     </TableContainer>
+    )
 }
 export default Blogs

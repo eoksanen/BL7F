@@ -30,7 +30,8 @@
 
 .menu {
   color: whitesmoke;
-  background-color: cornflowerblue
+  background-color: cornflowerblue;
+  width: 600px
 }
 
 @keyframes App-logo-spin {
