@@ -1,4 +1,5 @@
 import blogService from '../services/blogs'
+import commentService from '../services/comments'
 
 /*
 const getId = () => (100000 * Math.random()).toFixed(0)
@@ -29,6 +30,12 @@ const reducer = (state = [], action) => {
       const idr = action.data
       console.log('removed item id ', idr)
       return [...state.filter(blog => blog.id !== idr)]
+      case 'REMOVE_COMMENT':
+        const rbc = action.data
+        console.log('removed blog id ', rbc.blog_id)
+        console.log('removed comment id ', rbc.comment_id)
+        const blog = state.find(blog => blog.id)
+        return [...blog, ...blog.comments.filter(cm => cm.id !== rbc.comment_id)]
     case 'INIT_BLOGS':
       return action.data
     case 'VOTE':
@@ -47,7 +54,6 @@ const reducer = (state = [], action) => {
     return state
   }
 }
-
 
 export const voteBlog = (blog) => {
   return async dispatch => {
@@ -70,6 +76,17 @@ export const addComment = (commentObject) => {
   })
   }
 }
+
+export const removeComment = (blog_id, comment_id) => {
+  return async dispatch => {
+    const request = await commentService.removeComment(comment_id)
+    dispatch({
+      type: 'REMOVE_COMMENT',
+      data: { blog_id, comment_id }
+    })
+  }
+}
+
 
 export const createBlog = (newBlogObject) => {
   return async dispatch => {
@@ -100,6 +117,5 @@ export const initializeBlogs = () => {
   })
 }
 }
-
 
 export default reducer

@@ -4,6 +4,7 @@ import reducer from '../reducers/blogReducer'
 import { createBlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import Button from '@material-ui/core/Button'
+import { TextField } from '@material-ui/core'
 
 
 
@@ -45,34 +46,9 @@ const BlogForm = () => {
   
         <form onSubmit={addBlog}>
             <div>
-                Title
-          <input
-                id="title"
-                type="text"
-                value={newTitle}
-                name="Title"
-                onChange={(event) => setTitle(event.target.value)}
-          />
-          </div>
-          <div>
-              Author
-          <input
-                id="author"
-                type="text"
-                value={newAuthor}
-                name="Author"
-                onChange={(event) => setAuthor(event.target.value)}
-            />
-            </div>
-            <div>
-                Url
-            <input
-                id="url"
-                type="text"
-                value={newUrl}
-                name="Url"
-                onChange={(event) => setUrl(event.target.value)}
-            />
+              <TextField value={newTitle} label = "Title" onChange={(event) => setTitle(event.target.value)}></TextField><br></br>
+              <TextField value={newAuthor} label = "Author" onChange={(event) => setAuthor(event.target.value)} ></TextField><br></br>
+              <TextField value={newUrl} label = "Url" onChange={(event) => setUrl(event.target.value)} ></TextField>
             </div>
             <Button variant="contained" color="primary"  type="submit">save</Button>
         </form>

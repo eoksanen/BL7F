@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {voteBlog, removeBlog} from '../reducers/blogReducer'
+import { removeComment } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import CommentForm from './CommentForm'
 import Togglable from './Togglable';
@@ -94,7 +95,7 @@ const Blog = ({ showRemoveButton }) => {
                         {cm.comment}
                       </TableCell>
                       <TableCell>
-                        remove
+                      <div><Button style = {showRemoveButton} onClick={() => dispatch(removeComment(blog.id, cm.id))}>remove comment</Button></div>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -103,7 +104,7 @@ const Blog = ({ showRemoveButton }) => {
           </TableContainer>      
         </div>
         <div><ToggleCommentForm /></div>
-    <div><Button style = {showRemoveButton} onClick={() => handleRemoveOf(blog)}>Remove</Button></div>
+    <div><Button style = {showRemoveButton} onClick={() => handleRemoveOf(blog)}>Delete blog</Button></div>
 
     
   </div>

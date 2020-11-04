@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import { useDispatch } from 'react-redux'
 import { addComment } from '../reducers/blogReducer'
+import { Button, TextareaAutosize } from '@material-ui/core/'
+
 
 
 
@@ -31,19 +33,11 @@ const CommentForm = ({blogId}) => {
   
         <form onSubmit={createComment}>
             <div>
-          <textarea
-                id="blogComment"
-                type="text"
-                value={newComment}
-                name="Comment"
-                rows="3"
-                cols="30"
-                onChange={(event) => setComment(event.target.value)}
-          />
+            <TextareaAutosize value={newComment} aria-label="empty textarea" placeholder="write a comment here" onChange={(event) => setComment(event.target.value)} />
           </div>
           <div>
-            </div>
-          <button type="submit">add</button>
+          <Button variant = "contained" color = "primary" type="submit">add</Button>
+          </div>
         </form>
       </div>
     )
