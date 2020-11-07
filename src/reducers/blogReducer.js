@@ -34,8 +34,19 @@ const reducer = (state = [], action) => {
         const rbc = action.data
         console.log('removed blog id ', rbc.blog_id)
         console.log('removed comment id ', rbc.comment_id)
-        const blog = state.find(blog => blog.id)
-        return [...blog, ...blog.comments.filter(cm => cm.id !== rbc.comment_id)]
+        const blogToChange = state.find(blog => blog.id === rbc.blog_id)
+        const blogCommentToRemove = { 
+          ...blogToChange, 
+          comments: blogToChange.comments.filter(cm => cm.id !== rbc.comment_id)
+        } 
+        console.log('Changed BLOG: ',blogCommentToRemove)
+          return state.map(blog =>
+            blog.id !== rbc.blog_id ? blog : blogCommentToRemove
+          )
+
+
+
+       // return [...blog, ...blog.comments.filter(cm => cm.id !== rbc.comment_id)]
     case 'INIT_BLOGS':
       return action.data
     case 'VOTE':
@@ -79,7 +90,7 @@ export const addComment = (commentObject) => {
 
 export const removeComment = (blog_id, comment_id) => {
   return async dispatch => {
-    const request = await commentService.removeComment(comment_id)
+    const request = await commentService.removeComment(comment_id, blog_id)
     dispatch({
       type: 'REMOVE_COMMENT',
       data: { blog_id, comment_id }

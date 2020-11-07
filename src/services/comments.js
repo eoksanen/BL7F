@@ -7,13 +7,13 @@ const setToken = newToken => {
   token = `bearer ${newToken}`
 }
 
-const removeComment = (comment_id) => {
+const removeComment = (comment_id, blog_id) => {
 
     const config = {
       headers: { Authorization: token },
     }
   
-    const request = axios.delete(`../comments/${comment_id}`, config)
+    const request = axios.delete(`../api/comments/${blog_id}/${comment_id}`, config)
     return request.then(response => response.data)
   }
 

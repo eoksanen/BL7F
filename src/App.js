@@ -5,6 +5,7 @@ import Blogs from './components/Blogs'
 import Users from './components/Users'
 import User from './components/User'
 import blogService from './services/blogs'
+import commentService from './services/comments'
 import loginService from './services/login'
 import userService from './services/users'
 import ShowName from './components/ShowName'
@@ -70,6 +71,7 @@ const App = () => {
     loggedUser = JSON.parse(loggedUserJSON)
     dispatch(setUser(loggedUser))
     blogService.setToken(loggedUser.token)
+    commentService.setToken(loggedUser.token)
 
   }
 }, [])
