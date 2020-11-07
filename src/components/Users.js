@@ -8,6 +8,7 @@ import {
     TableContainer,
     TableRow,
     Paper,
+    Typography,
   } from '@material-ui/core'
 
 
@@ -19,7 +20,7 @@ const Users = () => {
 
     return (
         <div>
-            <h1>Users</h1>
+  <Typography variant="h5" color="textSecondary" gutterBottom>Users</Typography>
 
             <TableContainer component={Paper}>
         <Table>

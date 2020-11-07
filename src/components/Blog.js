@@ -4,7 +4,7 @@ import {voteBlog, removeBlog} from '../reducers/blogReducer'
 import { removeComment } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import CommentForm from './CommentForm'
-import Togglable from './Togglable';
+import Togglable from './Togglable'
 import {
     BrowserRouter as Router,
     Switch,
@@ -24,6 +24,7 @@ import {
     TableContainer,
     TableRow,
     Paper,
+    Typography,
   } from '@material-ui/core'
 
 const Blog = ({ showRemoveButton }) => {
@@ -76,14 +77,35 @@ const Blog = ({ showRemoveButton }) => {
 
   return (
   <div className='blog'>
-    <h1 id="nameofblog" > {blog.title}</h1>
-    <a href = {blog.url}>{blog.url}</a>
-    <div>{blog.likes}</div>  
-    <div>likes <Button color="primary" onClick={ () => dispatch(voteBlog(blog))}>Like</Button></div>
-    <div>adden by {blog.author} </div>
+    <Typography variant="h4" color="secondary" gutterBottom>{blog.title}</Typography>
+    <TableContainer component={Paper}>
+      <Table>
+        <TableBody>
+          <TableRow>
+            <TableCell>URL</TableCell>
+            <TableCell> <a href = {blog.url}>{blog.url}</a></TableCell>
+            <TableCell></TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Likes:</TableCell>
+            <TableCell> <div>{blog.likes} Likes</div>  </TableCell>
+            <TableCell><div><Button color="primary" onClick={ () => dispatch(voteBlog(blog))}>Like</Button></div></TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+            <TableCell align="right">    <div>adden by {blog.author} </div></TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
+   
+   
+    
+
     <br></br>
     <div>
-    <h3>comments</h3>  
+    <Typography variant="h5" color="textSecondary" gutterBottom>comments</Typography> 
 
     
             <TableContainer component={Paper}>

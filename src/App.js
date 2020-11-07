@@ -32,7 +32,7 @@ import {
   useHistory,
 } from "react-router-dom"
 
-import { Container, Button, AppBar, Toolbar, IconButton } from '@material-ui/core'
+import { Container, Button, AppBar, Toolbar, IconButton, Typography } from '@material-ui/core'
 import  Alert  from '@material-ui/lab/Alert'
 
 const App = () => {
@@ -185,7 +185,7 @@ setTimeout(() => {
       
     </div>
 
-      <h1>Blogs</h1>
+    <Typography variant="h3" color="textSecondary" gutterBottom>Blogs</Typography>
       <NotificationR  />
 
 
