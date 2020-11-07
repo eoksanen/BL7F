@@ -198,7 +198,7 @@ setTimeout(() => {
  
     <Switch>
     <Route path="/blogs/:id">
-            <Blog />
+            <Blog loggedUser = {loggedUser} />
           </Route>
           <Route path="/blogs">
             <Blogs />

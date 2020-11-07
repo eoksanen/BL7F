@@ -27,7 +27,7 @@ import {
     Typography,
   } from '@material-ui/core'
 
-const Blog = ({ showRemoveButton }) => {
+const Blog = ({ loggedUser }) => {
 
   const handleRemoveOf = async (blog) => {
 
@@ -117,7 +117,8 @@ const Blog = ({ showRemoveButton }) => {
                         {cm.comment}
                       </TableCell>
                       <TableCell>
-                      <div><Button style = {showRemoveButton} onClick={() => dispatch(removeComment(blog.id, cm.id))}>remove comment</Button></div>
+                      {loggedUser === null ? null :
+                      <Button onClick={() => dispatch(removeComment(blog.id, cm.id))}>remove comment</Button>}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -126,7 +127,8 @@ const Blog = ({ showRemoveButton }) => {
           </TableContainer>      
         </div>
         <div><ToggleCommentForm /></div>
-    <div><Button style = {showRemoveButton} onClick={() => handleRemoveOf(blog)}>Delete blog</Button></div>
+        {loggedUser === null ? null :
+    <Button onClick={() => handleRemoveOf(blog)}>Delete blog</Button>}
 
     
   </div>

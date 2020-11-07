@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-
 let token = null
 
 const setToken = newToken => {

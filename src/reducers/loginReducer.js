@@ -1,5 +1,6 @@
 import loginService from '../services/login'
 import blogService from '../services/blogs'
+import commentService from '../services/comments'
 import { setNotification } from './notificationReducer'
 
 const reducer = (state = null, action) => {
@@ -28,6 +29,8 @@ const reducer = (state = null, action) => {
                   'loggedBlogappUser', JSON.stringify(user)
                 )
                 blogService.setToken(user.token)
+                commentService.setToken(user.token)
+
             
             dispatch({
                 type: 'LOGIN',
